@@ -10,22 +10,21 @@ function App() {
   const localStreamRef = useRef(null);
   const remoteStreamRef = useRef(null);
   const callInputRef = useRef(null);
-  const handleLocalStream = () => {
-    setLocalStream(
-      navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-    );
+  const handleLocalStream = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: true,
+    });
+    setLocalStream(stream);
+    localStreamRef.current.srcObject = stream;
 
     setRemoteStream(new MediaStream());
     pc.ontrack = (event) => {
-      setRemoteStream(
-        event.streams[0].getTracks().forEach((track) => {
-          remoteStream.addTrack(track);
-        })
-      );
+      event.streams[0].getTracks().forEach((track) => {
+        remoteStream.addTrack(track);
+      });
     };
 
-    localStreamRef.current.srcObject = localStream;
-    localStreamEle.srcObject = localStream;
     remoteStreamRef.current.srcObject = remoteStream;
   };
 
