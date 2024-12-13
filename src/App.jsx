@@ -6,6 +6,7 @@ function App() {
   const [localStream, setLocalStream] = useState(null);
   const [remoteStream, setRemoteStream] = useState(null);
 
+  const localStreamEle = document.getElementById("localStream");
   const localStreamRef = useRef(null);
   const remoteStreamRef = useRef(null);
   const callInputRef = useRef(null);
@@ -24,6 +25,7 @@ function App() {
     };
 
     localStreamRef.current.srcObject = localStream;
+    localStreamEle.srcObject = localStream;
     remoteStreamRef.current.srcObject = remoteStream;
   };
 
@@ -105,7 +107,12 @@ function App() {
       <div className="videos">
         <span>
           <h3>Local Stream</h3>
-          <video ref={localStreamRef} autoPlay playsInline></video>
+          <video
+            id="localStream"
+            ref={localStreamRef}
+            autoPlay
+            playsInline
+          ></video>
         </span>
         <span>
           <h3>Remote Stream</h3>
